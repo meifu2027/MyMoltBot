@@ -1,9 +1,5 @@
-import TodoList from '@/components/TodoList';
+import { redirect } from 'next/navigation';
 
 export default function Home() {
-  return (
-    <main>
-      <TodoList />
-    </main>
-  );
+  redirect('/home');
 }

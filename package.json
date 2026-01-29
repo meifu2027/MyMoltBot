@@ -1,7 +1,8 @@
 {
   "name": "mymoltbot",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "description": "Apple Music 风格 H5 音乐播放器，基于 iOS 26 液态玻璃设计",
   "scripts": {
     "dev": "next dev -H 0.0.0.0 -p 3000",
     "build": "next build",
@@ -9,9 +10,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "framer-motion": "^12.29.2",
     "next": "^15.1.6",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "zustand": "^5.0.10"
   },
   "devDependencies": {
     "@types/node": "^20",
