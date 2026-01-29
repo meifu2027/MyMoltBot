@@ -50,10 +50,10 @@ export default function TodoList() {
         {/* Header */}
         <div className="text-center mb-10">
           <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">
-            My Todo List
+            我的待办事项
           </h1>
           <p className="text-gray-600 dark:text-gray-400 text-lg">
-            Organize your tasks efficiently
+            高效管理您的任务
           </p>
         </div>
 
@@ -65,14 +65,14 @@ export default function TodoList() {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addTodo()}
-              placeholder="What needs to be done?"
+              placeholder="需要做什么？"
               className="flex-1 px-5 py-3.5 bg-gray-50 dark:bg-gray-700 border-2 border-transparent focus:border-blue-500 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 outline-none transition-all text-lg"
             />
             <button
               onClick={addTodo}
               className="px-8 py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all active:scale-95 text-lg"
             >
-              Add
+              添加
             </button>
           </div>
         </div>
@@ -82,14 +82,14 @@ export default function TodoList() {
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 mb-6">
             <div className="flex items-center justify-between">
               <p className="text-gray-600 dark:text-gray-400 font-medium">
-                {completedCount} of {totalCount} tasks completed
+                已完成 {completedCount}/{totalCount} 个任务
               </p>
               {completedCount > 0 && (
                 <button
                   onClick={clearCompleted}
                   className="text-sm text-red-500 hover:text-red-700 font-medium transition-colors"
                 >
-                  Clear completed
+                  清除已完成
                 </button>
               )}
             </div>
@@ -109,7 +109,7 @@ export default function TodoList() {
             <div className="text-center py-16 bg-white dark:bg-gray-800 rounded-2xl shadow-lg">
               <div className="text-6xl mb-4">📝</div>
               <p className="text-gray-500 dark:text-gray-400 text-xl">
-                No tasks yet. Add one above!
+                还没有任务，在上面添加一个吧！
               </p>
             </div>
           ) : (
@@ -168,7 +168,7 @@ export default function TodoList() {
         {/* Footer */}
         {todos.length > 0 && (
           <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-            Double-click to edit • Hover to delete
+            双击编辑 • 悬停删除
           </div>
         )}
       </div>
