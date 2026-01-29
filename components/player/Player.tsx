@@ -9,10 +9,10 @@ import {
   PlayIcon,
   ForwardIcon,
   BackwardIcon,
-  SpeakerIcon,
+  SpeakerWaveIcon,
   ArrowPathIcon,
   ArrowPathRoundedSquareIcon,
-  ArrowsPointingIcon,
+  ArrowsRightLeftIcon,
   DocumentTextIcon,
   ChevronDownIcon,
   ChevronUpIcon,
@@ -217,7 +217,7 @@ export default function Player() {
                   onClick={() => setPlayMode(playMode === 'shuffle' ? 'loop' : 'shuffle')}
                   className={`text-2xl ${playMode === 'shuffle' ? 'text-white' : 'text-white/40'}`}
                 >
-                  <ArrowsPointingIcon className="w-8 h-8" />
+                  <ArrowsRightLeftIcon className="w-8 h-8" />
                 </button>
                 <button
                   onClick={prev}
@@ -255,7 +255,7 @@ export default function Player() {
                   <span>{isLyricsVisible ? '隐藏歌词' : '显示歌词'}</span>
                 </button>
                 <div className="flex items-center gap-3">
-                  <SpeakerIcon className="w-5 h-5 text-white/60" />
+                  <SpeakerWaveIcon className="w-5 h-5 text-white/60" />
                   <input
                     type="range"
                     min="0"
