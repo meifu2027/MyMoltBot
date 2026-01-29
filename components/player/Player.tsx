@@ -1,9 +1,24 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { usePlayerStore } from '../../store/playerStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Song } from '../../lib/types';
+import {
+  PauseIcon,
+  PlayIcon,
+  ForwardIcon,
+  BackwardIcon,
+  SpeakerIcon,
+  ArrowPathIcon,
+  ArrowPathRoundedSquareIcon,
+  ArrowsPointingIcon,
+  DocumentTextIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  HeartIcon,
+} from '@heroicons/react/24/outline';
+import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
 
 export default function Player() {
   const {
@@ -70,17 +85,6 @@ export default function Player() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const getPlayModeIcon = () => {
-    switch (playMode) {
-      case 'loop':
-        return '🔁';
-      case 'loop-one':
-        return '🔂';
-      case 'shuffle':
-        return '🔀';
-    }
-  };
-
   if (!currentSong) return null;
 
   return (
@@ -99,13 +103,13 @@ export default function Player() {
             initial={{ y: 100 }}
             animate={{ y: 0 }}
             exit={{ y: 100 }}
-            className="fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur-xl border-t border-gray-800 p-4 z-50"
+            className="fixed bottom-16 left-0 right-0 bg-gray-900/95 backdrop-blur-xl border-t border-gray-800 p-4 z-50"
           >
             <div className="flex items-center gap-4 max-w-4xl mx-auto">
               <motion.img
                 src={currentSong.coverUrl}
                 alt={currentSong.title}
-                className="w-12 h-12 rounded-lg object-cover shadow-lg"
+                className="w-12 h-12 rounded-xl object-cover shadow-lg"
                 animate={{ rotate: isPlaying ? 360 : 0 }}
                 transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
               />
@@ -115,15 +119,15 @@ export default function Player() {
               </div>
               <button
                 onClick={togglePlay}
-                className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg"
+                className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-gray-900"
               >
-                {isPlaying ? '⏸️' : '▶️'}
+                {isPlaying ? <PauseIcon className="w-5 h-5" /> : <PlayIcon className="w-5 h-5" />}
               </button>
               <button
                 onClick={maximizePlayer}
                 className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white"
               >
-                ⬆️
+                <ChevronUpIcon className="w-5 h-5" />
               </button>
             </div>
           </motion.div>
@@ -144,13 +148,14 @@ export default function Player() {
             <div className="flex items-center justify-between p-6">
               <button
                 onClick={minimizePlayer}
-                className="text-white/60 hover:text-white transition-colors"
+                className="text-white/60 hover:text-white transition-colors flex items-center gap-2"
               >
-                ⬇️ 最小化
+                <ChevronDownIcon className="w-5 h-5" />
+                <span>最小化</span>
               </button>
               <div className="text-white/60 text-sm">正在播放</div>
               <button className="text-white/60 hover:text-white transition-colors">
-                ⋮
+                <ArrowsPointingIcon className="w-6 h-6" />
               </button>
             </div>
 
@@ -179,7 +184,11 @@ export default function Player() {
                   onClick={() => toggleFavorite(currentSong.id)}
                   className="text-2xl"
                 >
-                  {currentSong.isFavorite ? '❤️' : '🤍'}
+                  {currentSong.isFavorite ? (
+                    <HeartSolidIcon className="w-8 h-8 text-red-500" />
+                  ) : (
+                    <HeartIcon className="w-8 h-8" />
+                  )}
                 </button>
               </div>
 
@@ -208,31 +217,31 @@ export default function Player() {
                   onClick={() => setPlayMode(playMode === 'shuffle' ? 'loop' : 'shuffle')}
                   className={`text-2xl ${playMode === 'shuffle' ? 'text-white' : 'text-white/40'}`}
                 >
-                  🔀
+                  <ArrowsPointingIcon className="w-8 h-8" />
                 </button>
                 <button
                   onClick={prev}
                   className="text-4xl text-white hover:scale-110 transition-transform"
                 >
-                  ⏮️
+                  <BackwardIcon className="w-10 h-10" />
                 </button>
                 <button
                   onClick={togglePlay}
-                  className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl shadow-xl hover:scale-105 transition-transform"
+                  className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-3xl shadow-xl hover:scale-105 transition-transform text-gray-900"
                 >
-                  {isPlaying ? '⏸️' : '▶️'}
+                  {isPlaying ? <PauseIcon className="w-10 h-10" /> : <PlayIcon className="w-10 h-10" />}
                 </button>
                 <button
                   onClick={next}
                   className="text-4xl text-white hover:scale-110 transition-transform"
                 >
-                  ⏭️
+                  <ForwardIcon className="w-10 h-10" />
                 </button>
                 <button
                   onClick={() => setPlayMode(playMode === 'loop-one' ? 'loop' : 'loop-one')}
                   className={`text-2xl ${playMode === 'loop-one' ? 'text-white' : 'text-white/40'}`}
                 >
-                  🔂
+                  <ArrowPathRoundedSquareIcon className="w-8 h-8" />
                 </button>
               </div>
 
@@ -242,10 +251,11 @@ export default function Player() {
                   onClick={toggleLyrics}
                   className="text-white/60 hover:text-white transition-colors flex items-center gap-2"
                 >
-                  📝 {isLyricsVisible ? '隐藏歌词' : '显示歌词'}
+                  <DocumentTextIcon className="w-5 h-5" />
+                  <span>{isLyricsVisible ? '隐藏歌词' : '显示歌词'}</span>
                 </button>
                 <div className="flex items-center gap-3">
-                  <span className="text-white/60">🔊</span>
+                  <SpeakerIcon className="w-5 h-5 text-white/60" />
                   <input
                     type="range"
                     min="0"
@@ -274,7 +284,7 @@ export default function Player() {
                       onClick={toggleLyrics}
                       className="text-white/60 hover:text-white"
                     >
-                      ✕
+                      <ArrowPathIcon className="w-6 h-6" />
                     </button>
                   </div>
                   <div className="text-white/80 text-lg leading-relaxed whitespace-pre-line">

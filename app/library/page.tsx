@@ -3,22 +3,24 @@
 import { mockPlaylists, mockSongs } from '../../data/mockData';
 import { motion } from 'framer-motion';
 import { usePlayerStore } from '../../store/playerStore';
+import { PlayIcon, BellIcon, PlusIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
 
 export default function LibraryPage() {
-  const { playSong, setPlaylist } = usePlayerStore();
+  const { playSong, setPlaylist, currentSong } = usePlayerStore();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-red-900 to-gray-900 text-white">
       {/* 顶部栏 */}
       <div className="fixed top-0 left-0 right-0 bg-gray-900/80 backdrop-blur-xl border-b border-gray-800 z-40">
         <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
-          <h1 className="text-2xl font-bold">📚 资料库</h1>
+          <h1 className="text-2xl font-bold">资料库</h1>
           <div className="flex items-center gap-4">
             <button className="text-white/60 hover:text-white transition-colors">
-              ➕
+              <PlusIcon className="w-6 h-6" />
             </button>
             <button className="text-white/60 hover:text-white transition-colors">
-              🔔
+              <BellIcon className="w-6 h-6" />
             </button>
             <button className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-sm font-bold">
               M
@@ -32,10 +34,10 @@ export default function LibraryPage() {
         {/* 资料库分类 */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           {[
-            { icon: '❤️', label: '已喜欢的歌曲', count: 24 },
-            { icon: '🎵', label: '专辑', count: 12 },
-            { icon: '📋', label: '播放列表', count: 15 },
-            { icon: '🎤', label: '歌手', count: 30 },
+            { icon: HeartIcon, label: '已喜欢的歌曲', count: 24 },
+            { icon: PlayIcon, label: '专辑', count: 12 },
+            { icon: PlusIcon, label: '播放列表', count: 15 },
+            { icon: BellIcon, label: '歌手', count: 30 },
           ].map((item, index) => (
             <motion.div
               key={item.label}
@@ -44,7 +46,9 @@ export default function LibraryPage() {
               transition={{ delay: index * 0.1 }}
               className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 cursor-pointer hover:scale-105 transition-transform"
             >
-              <div className="text-4xl mb-3">{item.icon}</div>
+              <div className="flex justify-center mb-3">
+                <item.icon className="w-8 h-8" />
+              </div>
               <h3 className="font-semibold mb-1">{item.label}</h3>
               <p className="text-white/60 text-sm">{item.count} 个</p>
             </motion.div>
@@ -85,10 +89,10 @@ export default function LibraryPage() {
                   </p>
                 </div>
                 <button className="text-white/60 hover:text-white transition-colors">
-                  ❤️
+                  <HeartIcon className="w-6 h-6" />
                 </button>
                 <button className="text-white/60 hover:text-white transition-colors">
-                  ⋮
+                  <PlusIcon className="w-6 h-6" />
                 </button>
               </motion.div>
             ))}
@@ -115,8 +119,8 @@ export default function LibraryPage() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl">
-                      ▶️
+                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl text-gray-900">
+                      <PlayIcon className="w-6 h-6" />
                     </div>
                   </div>
                 </div>

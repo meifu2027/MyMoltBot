@@ -2,16 +2,23 @@
 
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
+import {
+  PlayIcon,
+  GlobeAltIcon,
+  SpeakerIcon,
+  BookmarkIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/react/24/outline';
 
 export default function BottomNavigation() {
   const pathname = usePathname();
 
   const navItems = [
-    { label: '现在就听', path: '/home', icon: '🎵' },
-    { label: '浏览', path: '/browse', icon: '🌟' },
-    { label: '广播', path: '/radio', icon: '📻' },
-    { label: '资料库', path: '/library', icon: '📚' },
-    { label: '搜索', path: '/search', icon: '🔍' },
+    { label: '现在就听', path: '/home', icon: PlayIcon },
+    { label: '浏览', path: '/browse', icon: GlobeAltIcon },
+    { label: '广播', path: '/radio', icon: SpeakerIcon },
+    { label: '资料库', path: '/library', icon: BookmarkIcon },
+    { label: '搜索', path: '/search', icon: MagnifyingGlassIcon },
   ];
 
   return (
@@ -25,9 +32,9 @@ export default function BottomNavigation() {
                 key={item.path}
                 className="flex flex-col items-center justify-center flex-1 h-full relative group"
               >
-                <span className={`text-2xl mb-1 transition-all ${isActive ? 'scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
-                  {item.icon}
-                </span>
+                <item.icon
+                  className={`w-6 h-6 mb-1 transition-all ${isActive ? 'text-blue-500' : 'text-white/60 group-hover:text-white/80'}`}
+                />
                 <span
                   className={`text-xs font-medium transition-all ${
                     isActive ? 'text-white' : 'text-white/60 group-hover:text-white/80'

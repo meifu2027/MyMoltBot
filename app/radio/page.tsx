@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { PlayIcon, BellIcon, SpeakerIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 export default function RadioPage() {
   return (
@@ -8,10 +9,13 @@ export default function RadioPage() {
       {/* 顶部栏 */}
       <div className="fixed top-0 left-0 right-0 bg-gray-900/80 backdrop-blur-xl border-b border-gray-800 z-40">
         <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
-          <h1 className="text-2xl font-bold">📻 广播</h1>
+          <h1 className="text-2xl font-bold flex items-center gap-2">
+            <SpeakerIcon className="w-6 h-6" />
+            <span>广播</span>
+          </h1>
           <div className="flex items-center gap-4">
             <button className="text-white/60 hover:text-white transition-colors">
-              🔔
+              <BellIcon className="w-6 h-6" />
             </button>
             <button className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-sm font-bold">
               M
@@ -43,7 +47,9 @@ export default function RadioPage() {
                 transition={{ delay: index * 0.1 }}
                 className={`bg-gradient-to-br ${station.color} rounded-2xl p-6 cursor-pointer hover:scale-105 transition-transform shadow-xl`}
               >
-                <div className="text-4xl mb-4">📻</div>
+                <div className="flex justify-center mb-4">
+                  <SpeakerIcon className="w-8 h-8" />
+                </div>
                 <h4 className="font-bold text-lg mb-2">{station.name}</h4>
                 <p className="text-white/80 text-sm">{station.desc}</p>
               </motion.div>
@@ -85,7 +91,7 @@ export default function RadioPage() {
                   <p className="text-white/40 text-xs">{podcast.episodes} 集节目</p>
                 </div>
                 <button className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
-                  ▶️
+                  <PlayIcon className="w-6 h-6" />
                 </button>
               </motion.div>
             ))}
@@ -97,10 +103,10 @@ export default function RadioPage() {
           <h3 className="text-2xl font-bold mb-6">为你推荐</h3>
           <div className="space-y-4">
             {[
-              { title: '根据你的音乐品味', desc: '基于你最近播放的歌曲', icon: '🎵' },
-              { title: '每日精选', desc: '为你精心挑选的歌曲', icon: '⭐' },
-              { title: '新发现', desc: '你可能喜欢的新歌曲', icon: '✨' },
-              { title: '心情音乐', desc: '根据时间和心情推荐', icon: '😊' },
+              { title: '根据你的音乐品味', desc: '基于你最近播放的歌曲', icon: PlayIcon },
+              { title: '每日精选', desc: '为你精心挑选的歌曲', icon: PlusIcon },
+              { title: '新发现', desc: '你可能喜欢的新歌曲', icon: BellIcon },
+              { title: '心情音乐', desc: '根据时间和心情推荐', icon: SpeakerIcon },
             ].map((item, index) => (
               <motion.div
                 key={item.title}
@@ -109,13 +115,15 @@ export default function RadioPage() {
                 transition={{ delay: index * 0.1 }}
                 className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 flex items-center gap-4 cursor-pointer hover:bg-white/10 transition-colors"
               >
-                <div className="text-4xl">{item.icon}</div>
+                <div className="flex justify-center">
+                  <item.icon className="w-8 h-8" />
+                </div>
                 <div className="flex-1">
                   <h4 className="font-bold text-lg">{item.title}</h4>
                   <p className="text-white/60 text-sm">{item.desc}</p>
                 </div>
                 <button className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center shadow-lg">
-                  ▶️
+                  <PlayIcon className="w-6 h-6" />
                 </button>
               </motion.div>
             ))}
