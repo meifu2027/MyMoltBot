@@ -14,11 +14,11 @@ export default function BottomNavigation() {
   const pathname = usePathname();
 
   const navItems = [
-    { label: '现在就听', path: '/home', icon: <PlayIcon /> },
-    { label: '浏览', path: '/browse', icon: <GlobeAltIcon /> },
-    { label: '广播', path: '/radio', icon: <SpeakerIcon /> },
-    { label: '资料库', path: '/library', icon: <BookmarkIcon /> },
-    { label: '搜索', path: '/search', icon: <MagnifyingGlassIcon /> },
+    { label: '现在就听', path: '/home', icon: PlayIcon },
+    { label: '浏览', path: '/browse', icon: GlobeAltIcon },
+    { label: '广播', path: '/radio', icon: SpeakerIcon },
+    { label: '资料库', path: '/library', icon: BookmarkIcon },
+    { label: '搜索', path: '/search', icon: MagnifyingGlassIcon },
   ];
 
   return (
@@ -27,12 +27,13 @@ export default function BottomNavigation() {
         <div className="flex justify-around items-center h-16">
           {navItems.map((item) => {
             const isActive = pathname === item.path;
+            const IconComponent = item.icon;
             return (
               <button
                 key={item.path}
                 className="flex flex-col items-center justify-center flex-1 h-full relative group"
               >
-                <item.icon
+                <IconComponent
                   className={`w-6 h-6 mb-1 transition-all ${isActive ? 'text-blue-500' : 'text-white/60 group-hover:text-white/80'}`}
                 />
                 <span

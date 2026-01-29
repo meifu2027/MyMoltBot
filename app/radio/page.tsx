@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { PlayIcon, BellIcon, SpeakerIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { PlayIcon, BellIcon, SpeakerWaveIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 export default function RadioPage() {
   return (
@@ -10,7 +10,7 @@ export default function RadioPage() {
       <div className="fixed top-0 left-0 right-0 bg-gray-900/80 backdrop-blur-xl border-b border-gray-800 z-40">
         <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
           <h1 className="text-2xl font-bold flex items-center gap-2">
-            <SpeakerIcon className="w-6 h-6" />
+            <SpeakerWaveIcon className="w-6 h-6" />
             <span>广播</span>
           </h1>
           <div className="flex items-center gap-4">

@@ -34,10 +34,10 @@ export default function LibraryPage() {
         {/* 资料库分类 */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           {[
-            { icon: HeartIcon, label: '已喜欢的歌曲', count: 24 },
-            { icon: PlayIcon, label: '专辑', count: 12 },
-            { icon: PlusIcon, label: '播放列表', count: 15 },
-            { icon: BellIcon, label: '歌手', count: 30 },
+            { icon: <HeartIcon />, label: '已喜欢的歌曲', count: 24 },
+            { icon: <PlayIcon />, label: '专辑', count: 12 },
+            { icon: <PlusIcon />, label: '播放列表', count: 15 },
+            { icon: <BellIcon />, label: '歌手', count: 30 },
           ].map((item, index) => (
             <motion.div
               key={item.label}
@@ -47,7 +47,7 @@ export default function LibraryPage() {
               className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 cursor-pointer hover:scale-105 transition-transform"
             >
               <div className="flex justify-center mb-3">
-                <item.icon className="w-8 h-8" />
+                {item.icon}
               </div>
               <h3 className="font-semibold mb-1">{item.label}</h3>
               <p className="text-white/60 text-sm">{item.count} 个</p>
