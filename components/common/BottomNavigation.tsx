@@ -14,11 +14,11 @@ export default function BottomNavigation() {
   const pathname = usePathname();
 
   const navItems = [
-    { label: '现在就听', path: '/home', icon: PlayIcon },
-    { label: '浏览', path: '/browse', icon: GlobeAltIcon },
-    { label: '广播', path: '/radio', icon: SpeakerIcon },
-    { label: '资料库', path: '/library', icon: BookmarkIcon },
-    { label: '搜索', path: '/search', icon: MagnifyingGlassIcon },
+    { label: '现在就听', path: '/home', icon: <PlayIcon /> },
+    { label: '浏览', path: '/browse', icon: <GlobeAltIcon /> },
+    { label: '广播', path: '/radio', icon: <SpeakerIcon /> },
+    { label: '资料库', path: '/library', icon: <BookmarkIcon /> },
+    { label: '搜索', path: '/search', icon: <MagnifyingGlassIcon /> },
   ];
 
   return (
