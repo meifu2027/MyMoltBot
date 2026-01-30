@@ -185,25 +185,25 @@ allowedDevOrigins: [
 ## 📸 功能截图
 
 ### 主页 - 现在就听
-![现在就听](screenshots/home.png)
+![现在就听](screenshots/home.jpg)
 
 ### 浏览页面
-![浏览](screenshots/browse.png)
+![浏览](screenshots/browse.jpg)
 
 ### 广播页面
-![广播](screenshots/radio.png)
+![广播](screenshots/radio.jpg)
 
 ### 资料库页面
-![资料库](screenshots/library.png)
+![资料库](screenshots/library.jpg)
 
 ### 搜索页面
-![搜索](screenshots/search.png)
+![搜索](screenshots/search.jpg)
 
 ### 播放器 - 全屏模式
-![播放器](screenshots/player-full.png)
+![播放器](screenshots/player-full.jpg)
 
 ### 播放器 - 迷你模式
-![迷你播放器](screenshots/player-mini.png)
+![迷你播放器](screenshots/player-mini.jpg)
 
 ---
 
