@@ -1,9 +1,27 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { usePlayerStore } from '../../store/playerStore';
 import { Play, Bell, Radio, Plus, Speaker } from 'lucide-react';
+import { useToast } from '../../hooks/useToast';
+import { ToastContainer } from '../../components/common/Toast';
 
 export default function RadioPage() {
+  const { playSong } = usePlayerStore();
+  const { toasts, showToast, removeToast } = useToast();
+  const [currentStation, setCurrentStation] = useState<string | null>(null);
+  const [showAllPodcasts, setShowAllPodcasts] = useState(false);
+
+  const handleStationClick = (stationName: string) => {
+    setCurrentStation(stationName);
+    showToast(`正在播放: ${stationName}`, 'success');
+  };
+
+  const handlePodcastClick = (podcastTitle: string) => {
+    showToast(`打开播客: ${podcastTitle}`, 'info');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-green-900 to-gray-900 text-white">
       {/* 顶部栏 */}
@@ -14,10 +32,16 @@ export default function RadioPage() {
             <span>广播</span>
           </h1>
           <div className="flex items-center gap-4">
-            <button className="text-white/60 hover:text-white transition-colors">
+            <button
+              onClick={() => showToast('暂无新通知', 'info')}
+              className="text-white/60 hover:text-white transition-colors"
+            >
               <Bell className="w-6 h-6" />
             </button>
-            <button className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-sm font-bold">
+            <button
+              onClick={() => showToast('个人中心功能开发中...', 'info')}
+              className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-sm font-bold hover:scale-105 transition-transform"
+            >
               M
             </button>
           </div>
@@ -45,10 +69,14 @@ export default function RadioPage() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
-                className={`bg-gradient-to-br ${station.color} rounded-2xl p-6 cursor-pointer hover:scale-105 transition-transform shadow-xl`}
+                onClick={() => handleStationClick(station.name)}
+                className={`bg-gradient-to-br ${station.color} rounded-2xl p-6 cursor-pointer hover:scale-105 transition-transform shadow-xl relative`}
               >
+                {currentStation === station.name && (
+                  <div className="absolute top-2 right-2 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                )}
                 <div className="flex justify-center mb-4">
-                  <Speaker className="w-8 h-8" />
+                  <Speaker className={`w-8 h-8 ${currentStation === station.name ? 'animate-pulse' : ''}`} />
                 </div>
                 <h4 className="font-bold text-lg mb-2">{station.name}</h4>
                 <p className="text-white/80 text-sm">{station.desc}</p>
@@ -61,8 +89,14 @@ export default function RadioPage() {
         <section className="mb-12">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold">播客推荐</h3>
-            <button className="text-white/60 hover:text-white transition-colors">
-              查看全部 →
+            <button
+              onClick={() => {
+                setShowAllPodcasts(!showAllPodcasts);
+                showToast(showAllPodcasts ? '收起播客列表' : '展开全部播客', 'success');
+              }}
+              className="text-white/60 hover:text-white transition-colors"
+            >
+              {showAllPodcasts ? '收起 ↑' : '查看全部 →'}
             </button>
           </div>
 
@@ -78,6 +112,7 @@ export default function RadioPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
+                onClick={() => handlePodcastClick(podcast.title)}
                 className="bg-white/5 backdrop-blur-xl rounded-2xl p-4 flex items-center gap-4 cursor-pointer hover:bg-white/10 transition-colors"
               >
                 <img
@@ -90,7 +125,13 @@ export default function RadioPage() {
                   <p className="text-white/60 text-sm mb-1">{podcast.host}</p>
                   <p className="text-white/40 text-xs">{podcast.episodes} 集节目</p>
                 </div>
-                <button className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePodcastClick(podcast.title);
+                  }}
+                  className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
+                >
                   <Play className="w-6 h-6" />
                 </button>
               </motion.div>
@@ -113,6 +154,7 @@ export default function RadioPage() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
+                onClick={() => showToast(`正在打开: ${item.title}`, 'info')}
                 className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 flex items-center gap-4 cursor-pointer hover:bg-white/10 transition-colors"
               >
                 <div className="flex justify-center">
@@ -122,7 +164,13 @@ export default function RadioPage() {
                   <h4 className="font-bold text-lg">{item.title}</h4>
                   <p className="text-white/60 text-sm">{item.desc}</p>
                 </div>
-                <button className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center shadow-lg">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    showToast(`播放: ${item.title}`, 'success');
+                  }}
+                  className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform"
+                >
                   <Play className="w-6 h-6" />
                 </button>
               </motion.div>
@@ -130,6 +178,9 @@ export default function RadioPage() {
           </div>
         </section>
       </div>
+
+      {/* Toast 通知 */}
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
     </div>
   );
 }

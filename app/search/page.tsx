@@ -12,10 +12,13 @@ import {
   Plus,
   ArrowLeft,
 } from 'lucide-react';
+import { useToast } from '../../hooks/useToast';
+import { ToastContainer } from '../../components/common/Toast';
 
 export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const { playSong, setPlaylist } = usePlayerStore();
+  const { playSong, setPlaylist, toggleFavorite } = usePlayerStore();
+  const { toasts, showToast, removeToast } = useToast();
 
   const filteredSongs = searchQuery
     ? mockSongs.filter(s =>
@@ -71,7 +74,10 @@ export default function SearchPage() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: index * 0.05 }}
-                    onClick={() => setSearchQuery(tag)}
+                    onClick={() => {
+                      setSearchQuery(tag);
+                      showToast(`搜索: ${tag}`, 'info');
+                    }}
                     className="bg-white/10 backdrop-blur-xl rounded-full px-6 py-2 hover:bg-white/20 transition-colors"
                   >
                     {tag}
@@ -99,6 +105,10 @@ export default function SearchPage() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: index * 0.1 }}
+                    onClick={() => {
+                      setSearchQuery(category.name);
+                      showToast(`浏览分类: ${category.name}`, 'info');
+                    }}
                     className={`bg-gradient-to-br ${category.color} rounded-2xl p-6 cursor-pointer hover:scale-105 transition-transform shadow-xl`}
                   >
                     <h4 className="font-bold text-lg">{category.name}</h4>
@@ -133,10 +143,23 @@ export default function SearchPage() {
                         <p className="font-medium truncate">{song.title}</p>
                         <p className="text-white/60 text-sm truncate">{song.artist}</p>
                       </div>
-                      <button className="text-white/60 hover:text-white transition-colors">
-                        <Heart className="w-6 h-6" />
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFavorite(song.id);
+                          showToast(song.isFavorite ? '已取消收藏' : '已添加到收藏', 'success');
+                        }}
+                        className={`transition-colors ${song.isFavorite ? 'text-red-500' : 'text-white/60 hover:text-red-500'}`}
+                      >
+                        <Heart className={`w-6 h-6 ${song.isFavorite ? 'fill-current' : ''}`} />
                       </button>
-                      <button className="text-white/60 hover:text-white transition-colors">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          showToast(`添加到队列: ${song.title}`, 'info');
+                        }}
+                        className="text-white/60 hover:text-white transition-colors"
+                      >
                         <Plus className="w-6 h-6" />
                       </button>
                     </motion.div>
@@ -217,6 +240,9 @@ export default function SearchPage() {
           </>
         )}
       </div>
+
+      {/* Toast 通知 */}
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
     </div>
   );
 }

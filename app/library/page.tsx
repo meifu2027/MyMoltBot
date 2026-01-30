@@ -1,12 +1,21 @@
 'use client';
 
+import { useState } from 'react';
 import { mockPlaylists, mockSongs } from '../../data/mockData';
 import { motion } from 'framer-motion';
 import { usePlayerStore } from '../../store/playerStore';
 import { Play, Bell, Plus, Heart } from 'lucide-react';
+import { useToast } from '../../hooks/useToast';
+import { ToastContainer } from '../../components/common/Toast';
 
 export default function LibraryPage() {
-  const { playSong, setPlaylist, currentSong } = usePlayerStore();
+  const { playSong, setPlaylist, currentSong, toggleFavorite } = usePlayerStore();
+  const { toasts, showToast, removeToast } = useToast();
+  const [showAllPlaylists, setShowAllPlaylists] = useState(false);
+
+  const handleCategoryClick = (category: string) => {
+    showToast(`打开${category}`, 'info');
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-red-900 to-gray-900 text-white">
@@ -15,13 +24,22 @@ export default function LibraryPage() {
         <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
           <h1 className="text-2xl font-bold">资料库</h1>
           <div className="flex items-center gap-4">
-            <button className="text-white/60 hover:text-white transition-colors">
+            <button
+              onClick={() => showToast('创建新播放列表功能开发中...', 'info')}
+              className="text-white/60 hover:text-white transition-colors"
+            >
               <Plus className="w-6 h-6" />
             </button>
-            <button className="text-white/60 hover:text-white transition-colors">
+            <button
+              onClick={() => showToast('暂无新通知', 'info')}
+              className="text-white/60 hover:text-white transition-colors"
+            >
               <Bell className="w-6 h-6" />
             </button>
-            <button className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-sm font-bold">
+            <button
+              onClick={() => showToast('个人中心功能开发中...', 'info')}
+              className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-sm font-bold hover:scale-105 transition-transform"
+            >
               M
             </button>
           </div>
@@ -43,6 +61,7 @@ export default function LibraryPage() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
+              onClick={() => handleCategoryClick(item.label)}
               className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 cursor-pointer hover:scale-105 transition-transform"
             >
               <div className="flex justify-center mb-3">
@@ -58,13 +77,19 @@ export default function LibraryPage() {
         <section className="mb-12">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold">我的播放列表</h3>
-            <button className="text-white/60 hover:text-white transition-colors">
-              查看全部 →
+            <button
+              onClick={() => {
+                setShowAllPlaylists(!showAllPlaylists);
+                showToast(showAllPlaylists ? '收起播放列表' : '展开全部播放列表', 'success');
+              }}
+              className="text-white/60 hover:text-white transition-colors"
+            >
+              {showAllPlaylists ? '收起 ↑' : '查看全部 →'}
             </button>
           </div>
 
           <div className="space-y-3">
-            {mockPlaylists.slice(0, 5).map((playlist, index) => (
+            {(showAllPlaylists ? mockPlaylists : mockPlaylists.slice(0, 5)).map((playlist, index) => (
               <motion.div
                 key={playlist.id}
                 initial={{ opacity: 0, x: -20 }}
@@ -87,10 +112,22 @@ export default function LibraryPage() {
                     {playlist.songs.length} 首歌曲
                   </p>
                 </div>
-                <button className="text-white/60 hover:text-white transition-colors">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    showToast(`已收藏播放列表: ${playlist.name}`, 'success');
+                  }}
+                  className="text-white/60 hover:text-red-500 transition-colors"
+                >
                   <Heart className="w-6 h-6" />
                 </button>
-                <button className="text-white/60 hover:text-white transition-colors">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    showToast(`添加到队列: ${playlist.name}`, 'info');
+                  }}
+                  className="text-white/60 hover:text-white transition-colors"
+                >
                   <Plus className="w-6 h-6" />
                 </button>
               </motion.div>
@@ -130,6 +167,9 @@ export default function LibraryPage() {
           </div>
         </section>
       </div>
+
+      {/* Toast 通知 */}
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
     </div>
   );
 }
