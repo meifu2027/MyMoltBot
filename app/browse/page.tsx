@@ -3,7 +3,7 @@
 import { mockPlaylists, mockSongs, mockArtists } from '../../data/mockData';
 import { motion } from 'framer-motion';
 import { usePlayerStore } from '../../store/playerStore';
-import { PlayIcon, BellIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { Play, Bell, Search } from 'lucide-react';
 
 export default function BrowsePage() {
   const { playSong, setPlaylist } = usePlayerStore();
@@ -16,7 +16,7 @@ export default function BrowsePage() {
           <h1 className="text-2xl font-bold">浏览</h1>
           <div className="flex items-center gap-4">
             <button className="text-white/60 hover:text-white transition-colors">
-              <BellIcon className="w-6 h-6" />
+              <Bell className="w-6 h-6" />
             </button>
             <button className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-sm font-bold">
               M
@@ -30,7 +30,7 @@ export default function BrowsePage() {
         {/* 搜索栏 */}
         <div className="mb-8">
           <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 flex items-center gap-3">
-            <MagnifyingGlassIcon className="w-6 h-6 text-white/60" />
+            <Search className="w-6 h-6 text-white/60" />
             <input
               type="text"
               placeholder="搜索歌曲、歌手、专辑"
@@ -122,7 +122,7 @@ export default function BrowsePage() {
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-xl text-gray-900">
-                      <PlayIcon className="w-7 h-7" />
+                      <Play className="w-7 h-7" />
                     </div>
                   </div>
                 </div>

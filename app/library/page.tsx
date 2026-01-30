@@ -3,8 +3,7 @@
 import { mockPlaylists, mockSongs } from '../../data/mockData';
 import { motion } from 'framer-motion';
 import { usePlayerStore } from '../../store/playerStore';
-import { PlayIcon, BellIcon, PlusIcon, HeartIcon } from '@heroicons/react/24/outline';
-import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
+import { Play, Bell, Plus, Heart } from 'lucide-react';
 
 export default function LibraryPage() {
   const { playSong, setPlaylist, currentSong } = usePlayerStore();
@@ -17,10 +16,10 @@ export default function LibraryPage() {
           <h1 className="text-2xl font-bold">资料库</h1>
           <div className="flex items-center gap-4">
             <button className="text-white/60 hover:text-white transition-colors">
-              <PlusIcon className="w-6 h-6" />
+              <Plus className="w-6 h-6" />
             </button>
             <button className="text-white/60 hover:text-white transition-colors">
-              <BellIcon className="w-6 h-6" />
+              <Bell className="w-6 h-6" />
             </button>
             <button className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-sm font-bold">
               M
@@ -34,10 +33,10 @@ export default function LibraryPage() {
         {/* 资料库分类 */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           {[
-            { icon: <HeartIcon />, label: '已喜欢的歌曲', count: 24 },
-            { icon: <PlayIcon />, label: '专辑', count: 12 },
-            { icon: <PlusIcon />, label: '播放列表', count: 15 },
-            { icon: <BellIcon />, label: '歌手', count: 30 },
+            { icon: <Heart />, label: '已喜欢的歌曲', count: 24 },
+            { icon: <Play />, label: '专辑', count: 12 },
+            { icon: <Plus />, label: '播放列表', count: 15 },
+            { icon: <Bell />, label: '歌手', count: 30 },
           ].map((item, index) => (
             <motion.div
               key={item.label}
@@ -89,10 +88,10 @@ export default function LibraryPage() {
                   </p>
                 </div>
                 <button className="text-white/60 hover:text-white transition-colors">
-                  <HeartIcon className="w-6 h-6" />
+                  <Heart className="w-6 h-6" />
                 </button>
                 <button className="text-white/60 hover:text-white transition-colors">
-                  <PlusIcon className="w-6 h-6" />
+                  <Plus className="w-6 h-6" />
                 </button>
               </motion.div>
             ))}
@@ -120,7 +119,7 @@ export default function LibraryPage() {
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl text-gray-900">
-                      <PlayIcon className="w-6 h-6" />
+                      <Play className="w-6 h-6" />
                     </div>
                   </div>
                 </div>

@@ -5,14 +5,13 @@ import { mockSongs, mockPlaylists, mockArtists } from '../../data/mockData';
 import { motion } from 'framer-motion';
 import { usePlayerStore } from '../../store/playerStore';
 import {
-  PlayIcon,
-  BellIcon,
-  MagnifyingGlassIcon,
-  HeartIcon,
-  PlusIcon,
-  ArrowLeftIcon,
-} from '@heroicons/react/24/outline';
-import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
+  Play,
+  Bell,
+  Search,
+  Heart,
+  Plus,
+  ArrowLeft,
+} from 'lucide-react';
 
 export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -43,7 +42,7 @@ export default function SearchPage() {
       <div className="fixed top-0 left-0 right-0 bg-gray-900/80 backdrop-blur-xl border-b border-gray-800 z-40">
         <div className="flex items-center gap-4 p-4 max-w-7xl mx-auto">
           <button className="text-white/60 hover:text-white transition-colors">
-            <ArrowLeftIcon className="w-6 h-6" />
+            <ArrowLeft className="w-6 h-6" />
           </button>
           <div className="flex-1 relative">
             <input
@@ -53,7 +52,7 @@ export default function SearchPage() {
               placeholder="搜索歌曲、歌手、专辑、歌单..."
               className="w-full bg-white/10 backdrop-blur-xl rounded-full px-6 py-3 pl-12 outline-none text-lg placeholder-white/40"
             />
-            <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-white/60" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-white/60" />
           </div>
         </div>
       </div>
@@ -135,10 +134,10 @@ export default function SearchPage() {
                         <p className="text-white/60 text-sm truncate">{song.artist}</p>
                       </div>
                       <button className="text-white/60 hover:text-white transition-colors">
-                        <HeartIcon className="w-6 h-6" />
+                        <Heart className="w-6 h-6" />
                       </button>
                       <button className="text-white/60 hover:text-white transition-colors">
-                        <PlusIcon className="w-6 h-6" />
+                        <Plus className="w-6 h-6" />
                       </button>
                     </motion.div>
                   ))}
@@ -209,7 +208,7 @@ export default function SearchPage() {
             {filteredSongs.length === 0 && filteredPlaylists.length === 0 && filteredArtists.length === 0 && (
               <div className="text-center py-20">
                 <div className="text-6xl mb-4">
-                  <MagnifyingGlassIcon className="w-20 h-20 mx-auto text-white/60" />
+                  <Search className="w-20 h-20 mx-auto text-white/60" />
                 </div>
                 <p className="text-white/60 text-xl">没有找到相关结果</p>
                 <p className="text-white/40 text-sm mt-2">试试其他关键词</p>

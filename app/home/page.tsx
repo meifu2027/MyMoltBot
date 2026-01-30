@@ -3,7 +3,7 @@
 import { mockPlaylists, mockSongs } from '../../data/mockData';
 import { motion } from 'framer-motion';
 import { usePlayerStore } from '../../store/playerStore';
-import { PlayIcon, BellIcon } from '@heroicons/react/24/outline';
+import { Play, Bell } from 'lucide-react';
 
 export default function HomePage() {
   const { playSong, setPlaylist } = usePlayerStore();
@@ -17,12 +17,12 @@ export default function HomePage() {
       <div className="fixed top-0 left-0 right-0 bg-gray-900/80 backdrop-blur-xl border-b border-gray-800 z-40">
         <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
           <h1 className="text-2xl font-bold flex items-center gap-2">
-            <PlayIcon className="w-6 h-6" />
+            <Play className="w-6 h-6" />
             <span>现在就听</span>
           </h1>
           <div className="flex items-center gap-4">
             <button className="text-white/60 hover:text-white transition-colors">
-              <BellIcon className="w-6 h-6" />
+              <Bell className="w-6 h-6" />
             </button>
             <button className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-sm font-bold">
               M
@@ -75,7 +75,7 @@ export default function HomePage() {
                     }}
                     className="absolute bottom-4 right-4 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-opacity text-gray-900"
                   >
-                    <PlayIcon className="w-6 h-6" />
+                    <Play className="w-6 h-6" />
                   </button>
                 </div>
                 <h4 className="font-semibold truncate">{playlist.name}</h4>
@@ -112,7 +112,7 @@ export default function HomePage() {
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl text-gray-900">
-                      <PlayIcon className="w-6 h-6" />
+                      <Play className="w-6 h-6" />
                     </div>
                   </div>
                 </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { usePlayerStore } from '../../store/playerStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Song } from '../../lib/types';
@@ -17,6 +17,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   HeartIcon,
+  ArrowsPointingOutIcon,
 } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
 
@@ -109,7 +110,7 @@ export default function Player() {
               <motion.img
                 src={currentSong.coverUrl}
                 alt={currentSong.title}
-                className="w-12 h-12 rounded-xl object-cover shadow-lg"
+                className="w-12 h-12 rounded-full object-cover shadow-lg"
                 animate={{ rotate: isPlaying ? 360 : 0 }}
                 transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
               />
@@ -155,7 +156,7 @@ export default function Player() {
               </button>
               <div className="text-white/60 text-sm">正在播放</div>
               <button className="text-white/60 hover:text-white transition-colors">
-                <ArrowsPointingIcon className="w-6 h-6" />
+                <ArrowsPointingOutIcon className="w-6 h-6" />
               </button>
             </div>
 
@@ -164,7 +165,7 @@ export default function Player() {
               <motion.img
                 src={currentSong.coverUrl}
                 alt={currentSong.title}
-                className="w-full max-w-md aspect-square rounded-3xl shadow-2xl object-cover"
+                className="w-80 h-80 md:w-96 md:h-96 rounded-full shadow-2xl object-cover"
                 animate={{ rotate: isPlaying ? 360 : 0 }}
                 transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
                 whileHover={{ scale: 1.02 }}

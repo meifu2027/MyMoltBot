@@ -177,5 +177,3 @@ export const mockUser: User = {
   recentPlayeds: ['1', '2', '3', '4', '5'],
   playlists: mockPlaylists.slice(0, 3)
 };
-
-export { Song, Playlist, Artist, User };
