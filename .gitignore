@@ -26,6 +26,10 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
+
+# security - prevent git directory access
+.git/
 
 # vercel
 .vercel
