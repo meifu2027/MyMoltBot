@@ -1,12 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import { mockPlaylists, mockSongs, mockArtists } from '../../data/mockData';
 import { motion } from 'framer-motion';
 import { usePlayerStore } from '../../store/playerStore';
-import { Play, Bell, Search } from 'lucide-react';
+import { Play, Bell, Search, Heart } from 'lucide-react';
+import { useToast } from '../../hooks/useToast';
+import { ToastContainer } from '../../components/common/Toast';
 
 export default function BrowsePage() {
-  const { playSong, setPlaylist } = usePlayerStore();
+  const { playSong, setPlaylist, toggleFavorite } = usePlayerStore();
+  const { toasts, showToast, removeToast } = useToast();
+  const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white">
@@ -15,10 +20,16 @@ export default function BrowsePage() {
         <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
           <h1 className="text-2xl font-bold">浏览</h1>
           <div className="flex items-center gap-4">
-            <button className="text-white/60 hover:text-white transition-colors">
+            <button
+              onClick={() => showToast('暂无新通知', 'info')}
+              className="text-white/60 hover:text-white transition-colors"
+            >
               <Bell className="w-6 h-6" />
             </button>
-            <button className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-sm font-bold">
+            <button
+              onClick={() => showToast('个人中心功能开发中...', 'info')}
+              className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-sm font-bold hover:scale-105 transition-transform"
+            >
               M
             </button>
           </div>
@@ -33,9 +44,22 @@ export default function BrowsePage() {
             <Search className="w-6 h-6 text-white/60" />
             <input
               type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="搜索歌曲、歌手、专辑"
               className="flex-1 bg-transparent outline-none text-lg placeholder-white/40"
             />
+            {searchQuery && (
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  showToast('搜索已清空', 'info');
+                }}
+                className="text-white/60 hover:text-white transition-colors text-sm"
+              >
+                清空
+              </button>
+            )}
           </div>
         </div>
 
@@ -133,6 +157,9 @@ export default function BrowsePage() {
           </div>
         </section>
       </div>
+
+      {/* Toast 通知 */}
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
     </div>
   );
 }

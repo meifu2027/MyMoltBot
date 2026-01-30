@@ -1,15 +1,22 @@
 'use client';
 
+import { useState } from 'react';
 import { mockPlaylists, mockSongs } from '../../data/mockData';
 import { motion } from 'framer-motion';
 import { usePlayerStore } from '../../store/playerStore';
-import { Play, Bell } from 'lucide-react';
+import { Play, Bell, Heart } from 'lucide-react';
+import { useToast } from '../../hooks/useToast';
+import { ToastContainer } from '../../components/common/Toast';
 
 export default function HomePage() {
-  const { playSong, setPlaylist } = usePlayerStore();
+  const { playSong, setPlaylist, toggleFavorite } = usePlayerStore();
+  const { toasts, showToast, removeToast } = useToast();
+  const [showAllPlaylists, setShowAllPlaylists] = useState(false);
+  const [showAllSongs, setShowAllSongs] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
-  const featuredPlaylists = mockPlaylists.slice(0, 3);
-  const recommendedSongs = mockSongs.slice(0, 10);
+  const featuredPlaylists = showAllPlaylists ? mockPlaylists : mockPlaylists.slice(0, 3);
+  const recommendedSongs = showAllSongs ? mockSongs : mockSongs.slice(0, 10);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white">
@@ -21,10 +28,22 @@ export default function HomePage() {
             <span>现在就听</span>
           </h1>
           <div className="flex items-center gap-4">
-            <button className="text-white/60 hover:text-white transition-colors">
+            <button
+              onClick={() => {
+                setShowNotifications(!showNotifications);
+                showToast(showNotifications ? '通知已隐藏' : '通知已展开', 'info');
+              }}
+              className="text-white/60 hover:text-white transition-colors relative"
+            >
               <Bell className="w-6 h-6" />
+              {showNotifications && (
+                <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+              )}
             </button>
-            <button className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-sm font-bold">
+            <button
+              onClick={() => showToast('个人中心功能开发中...', 'info')}
+              className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-sm font-bold hover:scale-105 transition-transform"
+            >
               M
             </button>
           </div>
@@ -47,8 +66,14 @@ export default function HomePage() {
         <section className="mb-12">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold">为你推荐</h3>
-            <button className="text-white/60 hover:text-white transition-colors">
-              查看全部 →
+            <button
+              onClick={() => {
+                setShowAllPlaylists(!showAllPlaylists);
+                showToast(showAllPlaylists ? '收起歌单' : '展开全部歌单', 'success');
+              }}
+              className="text-white/60 hover:text-white transition-colors"
+            >
+              {showAllPlaylists ? '收起 ↑' : '查看全部 →'}
             </button>
           </div>
 
@@ -89,8 +114,14 @@ export default function HomePage() {
         <section className="mb-12">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-2xl font-bold">新歌速递</h3>
-            <button className="text-white/60 hover:text-white transition-colors">
-              查看全部 →
+            <button
+              onClick={() => {
+                setShowAllSongs(!showAllSongs);
+                showToast(showAllSongs ? '收起歌曲' : '展开全部歌曲', 'success');
+              }}
+              className="text-white/60 hover:text-white transition-colors"
+            >
+              {showAllSongs ? '收起 ↑' : '查看全部 →'}
             </button>
           </div>
 
@@ -152,8 +183,15 @@ export default function HomePage() {
                   <p className="font-medium truncate">{song.title}</p>
                   <p className="text-white/60 text-sm truncate">{song.artist}</p>
                 </div>
-                <button className="text-white/60 hover:text-white transition-colors">
-                  ❤️
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleFavorite(song.id);
+                    showToast(song.isFavorite ? '已取消收藏' : '已添加到收藏', 'success');
+                  }}
+                  className={`transition-colors ${song.isFavorite ? 'text-red-500' : 'text-white/60 hover:text-red-500'}`}
+                >
+                  <Heart className={`w-6 h-6 ${song.isFavorite ? 'fill-current' : ''}`} />
                 </button>
                 <span className="text-white/40 text-sm">
                   {Math.floor(song.duration / 60)}:{(song.duration % 60).toString().padStart(2, '0')}
@@ -163,6 +201,9 @@ export default function HomePage() {
           </div>
         </section>
       </div>
+
+      {/* Toast 通知 */}
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
     </div>
   );
 }
