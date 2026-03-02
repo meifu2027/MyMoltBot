@@ -4,9 +4,9 @@
   "private": true,
   "description": "Apple Music 风格 H5 音乐播放器，基于 iOS 26 液态玻璃设计",
   "scripts": {
-    "dev": "next dev -H 0.0.0.0 -p 3000",
+    "dev": "next dev -H 0.0.0.0 -p 3001",
     "build": "next build",
-    "start": "next start -H 0.0.0.0 -p 3000",
+    "start": "next start -H 0.0.0.0 -p 3001",
     "lint": "next lint"
   },
   "dependencies": {

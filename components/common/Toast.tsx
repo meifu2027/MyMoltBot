@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle, XCircle, Info } from 'lucide-react';
-import { Toast } from '../hooks/useToast';
+import { Toast } from '../../hooks/useToast';
 
 interface ToastComponentProps {
   toast: Toast;
